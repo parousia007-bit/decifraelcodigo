@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arqueología Bíblica: Descifra el Código — Sistema de Identidad</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Source+Serif+4:ital,wght@0,300;0,600;1,300&family=JetBrains+Mono:wght@400;700&display=swap');
+
+  :root {
+    --arena:    #C9A84C;
+    --arena-d:  #8B6914;
+    --arena-l:  #F5E6C8;
+    --tierra:   #7B4F2E;
+    --tierra-d: #4A2C12;
+    --tierra-l: #D4A882;
+    --tinta:    #1C1C3A;
+    --tinta-m:  #2E2E52;
+    --tinta-l:  #4A4A7A;
+    --pergamino:#F7EDD8;
+    --polvo:    #E8D5B0;
+    --rojo-arc: #8B2010;
+    --verde-g:  #1B4D3E;
+    --blanco:   #FEFAF2;
+    --negro:    #0A0A14;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--tinta);
+    font-family: 'Source Serif 4', Georgia, serif;
+    color: var(--pergamino);
+    overflow-x: hidden;
+  }
+
+  /* ── SECCIÓN: PORTADA ── */
+  .portada {
+    min-height: 100vh;
+    background:
+      radial-gradient(ellipse at 20% 50%, rgba(201,168,76,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgba(123,79,46,0.15) 0%, transparent 50%),
+      linear-gradient(170deg, #0A0A1E 0%, #1C1C3A 40%, #2A1A0E 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Textura de arena */
+  .portada::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    opacity: 0.4;
+  }
+
+  /* Líneas de pergamino de fondo */
+  .lineas-fondo {
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 38px,
+      rgba(201,168,76,0.04) 38px,
+      rgba(201,168,76,0.04) 39px
+    );
+    pointer-events: none;
+  }
+
+  /* Partículas de polvo */
+  .polvo {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .polvo span {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: var(--arena);
+    border-radius: 50%;
+    opacity: 0;
+    animation: flotar var(--dur, 8s) var(--delay, 0s) infinite ease-in-out;
+  }
+  @keyframes flotar {
+    0%   { opacity: 0; transform: translateY(100vh) translateX(0); }
+    10%  { opacity: 0.6; }
+    90%  { opacity: 0.3; }
+    100% { opacity: 0; transform: translateY(-10vh) translateX(var(--dx, 20px)); }
+  }
+
+  /* ── LOGO CENTRAL ── */
+  .logo-wrap {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .logo-svg-wrap {
+    width: 220px;
+    height: 220px;
+    margin: 0 auto 24px;
+    filter: drop-shadow(0 0 40px rgba(201,168,76,0.3));
+    animation: pulso-logo 4s ease-in-out infinite;
+  }
+  @keyframes pulso-logo {
+    0%,100% { filter: drop-shadow(0 0 30px rgba(201,168,76,0.25)); }
+    50%     { filter: drop-shadow(0 0 55px rgba(201,168,76,0.5)); }
+  }
+
+  .nombre-primario {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(13px, 3vw, 17px);
+    font-weight: 400;
+    color: var(--arena);
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    opacity: 0.85;
+  }
+  .nombre-secundario {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(32px, 8vw, 56px);
+    font-weight: 900;
+    color: var(--blanco);
+    letter-spacing: -1px;
+    line-height: 1.05;
+    margin-bottom: 6px;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.5);
+  }
+  .nombre-secundario em {
+    color: var(--arena);
+    font-style: italic;
+  }
+  .tagline {
+    font-family: 'Source Serif 4', serif;
+    font-size: clamp(13px, 2.5vw, 16px);
+    color: var(--tierra-l);
+    font-style: italic;
+    letter-spacing: 1px;
+    margin-top: 12px;
+  }
+
+  /* ── DIVISOR DE PERGAMINO ── */
+  .divisor {
+    width: 100%;
+    max-width: 600px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--arena), transparent);
+    margin: 40px auto;
+    position: relative;
+    z-index: 2;
+  }
+  .divisor::before {
+    content: '✦';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--tinta);
+    padding: 0 12px;
+    color: var(--arena);
+    font-size: 14px;
+  }
+
+  /* ── SECCIÓN DE PALETA ── */
+  .seccion {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 60px 24px;
+    position: relative;
+    z-index: 2;
+  }
+  .seccion-titulo {
+    font-family: 'Playfair Display', serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--arena);
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .seccion-titulo::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--arena-d), transparent);
+  }
+
+  .paleta-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+  .color-card {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  }
+  .color-muestra {
+    height: 80px;
+    position: relative;
+  }
+  .color-info {
+    background: rgba(255,255,255,0.05);
+    padding: 12px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .color-nombre {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--blanco);
+    margin-bottom: 3px;
+  }
+  .color-hex {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--arena);
+    opacity: 0.8;
+  }
+  .color-uso {
+    font-size: 11px;
+    color: var(--tierra-l);
+    margin-top: 4px;
+    font-style: italic;
+  }
+
+  /* ── TIPOGRAFÍA ── */
+  .tipo-showcase {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 48px;
+  }
+  @media(max-width:600px) { .tipo-showcase { grid-template-columns: 1fr; } }
+  .tipo-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 14px;
+    padding: 24px;
+  }
+  .tipo-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--arena);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    opacity: 0.7;
+  }
+  .tipo-muestra-display {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 900;
+    color: var(--blanco);
+    line-height: 1.1;
+  }
+  .tipo-muestra-display em { color: var(--arena); font-style: italic; }
+  .tipo-muestra-body {
+    font-family: 'Source Serif 4', serif;
+    font-size: 16px;
+    color: var(--tierra-l);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+  .tipo-muestra-mono {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    color: var(--arena);
+    line-height: 1.6;
+  }
+
+  /* ── PERSONAJES ── */
+  .personajes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 48px;
+  }
+  .personaje-card {
+    background: linear-gradient(145deg, rgba(28,28,58,0.8), rgba(42,26,14,0.6));
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 20px;
+    padding: 28px 20px;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+  }
+  .personaje-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--grad);
+  }
+  .personaje-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(201,168,76,0.15);
+  }
+  .personaje-emoji {
+    font-size: 56px;
+    margin-bottom: 14px;
+    display: block;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));
+  }
+  .personaje-nombre {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--blanco);
+    margin-bottom: 4px;
+  }
+  .personaje-rol {
+    font-size: 12px;
+    color: var(--arena);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .personaje-desc {
+    font-size: 13px;
+    color: var(--tierra-l);
+    line-height: 1.6;
+    font-style: italic;
+  }
+  .personaje-edad {
+    display: inline-block;
+    margin-top: 12px;
+    background: rgba(201,168,76,0.15);
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 11px;
+    color: var(--arena);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* ── LOS 6 DÍAS ── */
+  .dias-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+  .dia-card {
+    border-radius: 16px;
+    padding: 22px;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(201,168,76,0.1);
+    transition: transform 0.2s;
+  }
+  .dia-card:hover { transform: translateY(-2px); }
+  .dia-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 64px;
+    font-weight: 900;
+    line-height: 1;
+    position: absolute;
+    right: 16px;
+    top: 8px;
+    opacity: 0.06;
+    color: var(--arena);
+  }
+  .dia-badge {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+  }
+  .dia-titulo {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--blanco);
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+  .dia-concepto {
+    font-size: 12px;
+    color: var(--tierra-l);
+    font-style: italic;
+    margin-bottom: 10px;
+    line-height: 1.5;
+  }
+  .dia-versiculo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--arena);
+    opacity: 0.7;
+  }
+
+  /* ── PANTALLA APP MOCKUP ── */
+  .app-mockup {
+    width: 320px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .phone-frame {
+    background: var(--negro);
+    border-radius: 40px;
+    padding: 12px;
+    box-shadow:
+      0 0 0 2px rgba(201,168,76,0.3),
+      0 30px 80px rgba(0,0,0,0.8),
+      inset 0 1px 0 rgba(255,255,255,0.1);
+  }
+  .phone-screen {
+    border-radius: 30px;
+    overflow: hidden;
+    background: var(--tinta);
+    min-height: 580px;
+  }
+  .screen-header {
+    background: linear-gradient(180deg, #0A0A1E 0%, #1C1C3A 100%);
+    padding: 32px 24px 20px;
+    text-align: center;
+    position: relative;
+  }
+  .screen-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--arena-d), transparent);
+  }
+  .screen-logo-mini {
+    font-size: 44px;
+    margin-bottom: 6px;
+  }
+  .screen-titulo {
+    font-family: 'Playfair Display', serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--arena);
+    text-transform: uppercase;
+    opacity: 0.7;
+  }
+  .screen-subtitulo {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 900;
+    color: var(--blanco);
+    margin-top: 4px;
+  }
+  .screen-subtitulo em { color: var(--arena); font-style: italic; }
+  .screen-body { padding: 20px 16px; }
+  .screen-dia-btn {
+    background: linear-gradient(135deg, rgba(201,168,76,0.15), rgba(28,28,58,0.8));
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 14px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .screen-dia-btn:hover {
+    background: linear-gradient(135deg, rgba(201,168,76,0.25), rgba(28,28,58,0.9));
+    transform: translateX(4px);
+  }
+  .screen-dia-emoji { font-size: 28px; flex-shrink: 0; }
+  .screen-dia-info { flex: 1; }
+  .screen-dia-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--arena);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0.7;
+  }
+  .screen-dia-nombre {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--blanco);
+  }
+  .screen-dia-lock { font-size: 14px; opacity: 0.4; }
+
+  /* ── COMPARATIVA GUARDIANES VS DESCIFRA ── */
+  .comparativa {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 48px;
+  }
+  @media(max-width:600px) { .comparativa { grid-template-columns: 1fr; } }
+  .comp-card {
+    border-radius: 20px;
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .comp-titulo {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 900;
+    margin-bottom: 16px;
+  }
+  .comp-item {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .comp-dot { flex-shrink: 0; margin-top: 4px; }
+
+  /* ── FOOTER ── */
+  .footer-brand {
+    text-align: center;
+    padding: 60px 24px;
+    position: relative;
+    z-index: 2;
+    border-top: 1px solid rgba(201,168,76,0.1);
+  }
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    letter-spacing: 4px;
+    color: var(--arena);
+    text-transform: uppercase;
+    opacity: 0.6;
+  }
+  .footer-sub {
+    font-size: 12px;
+    color: var(--tierra-l);
+    margin-top: 8px;
+    opacity: 0.5;
+  }
+
+  /* Animación de entrada */
+  @keyframes aparece {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .anima { animation: aparece 0.8s ease both; }
+  .anima-2 { animation: aparece 0.8s 0.2s ease both; }
+  .anima-3 { animation: aparece 0.8s 0.4s ease both; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!--  PORTADA / HERO                                            -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section class="portada">
+  <div class="lineas-fondo"></div>
+  <div class="polvo" id="polvo"></div>
+
+  <div class="logo-wrap anima">
+
+    <!-- LOGO SVG PRINCIPAL -->
+    <div class="logo-svg-wrap">
+      <svg viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg" width="220" height="220">
+        <defs>
+          <radialGradient id="gfondo" cx="50%" cy="50%" r="50%">
+            <stop offset="0%"   stop-color="#2A1A0E"/>
+            <stop offset="100%" stop-color="#0A0A1E"/>
+          </radialGradient>
+          <radialGradient id="gaura" cx="50%" cy="50%" r="50%">
+            <stop offset="0%"   stop-color="#C9A84C" stop-opacity="0.3"/>
+            <stop offset="100%" stop-color="#C9A84C" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="goro" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%"   stop-color="#F5E6C8"/>
+            <stop offset="50%"  stop-color="#C9A84C"/>
+            <stop offset="100%" stop-color="#8B6914"/>
+          </linearGradient>
+          <linearGradient id="gperg" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%"   stop-color="#F7EDD8"/>
+            <stop offset="100%" stop-color="#D4A882"/>
+          </linearGradient>
+          <filter id="brillo">
+            <feGaussianBlur stdDeviation="3" result="blur"/>
+            <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+          </filter>
+        </defs>
+
+        <!-- Fondo circular -->
+        <circle cx="110" cy="110" r="105" fill="url(#gfondo)" stroke="#C9A84C" stroke-width="1.5" stroke-opacity="0.4"/>
+        <!-- Aura de luz -->
+        <circle cx="110" cy="110" r="90" fill="url(#gaura)"/>
+
+        <!-- Arco exterior decorativo (como brújula/astrolabio) -->
+        <circle cx="110" cy="110" r="96" fill="none" stroke="#C9A84C" stroke-width="0.5" stroke-opacity="0.3"
+          stroke-dasharray="4 8"/>
+
+        <!-- Cruz de coordenadas arqueológicas -->
+        <line x1="110" y1="18" x2="110" y2="38" stroke="#C9A84C" stroke-width="1" stroke-opacity="0.5"/>
+        <line x1="110" y1="182" x2="110" y2="202" stroke="#C9A84C" stroke-width="1" stroke-opacity="0.5"/>
+        <line x1="18" y1="110" x2="38" y2="110" stroke="#C9A84C" stroke-width="1" stroke-opacity="0.5"/>
+        <line x1="182" y1="110" x2="202" y2="110" stroke="#C9A84C" stroke-width="1" stroke-opacity="0.5"/>
+
+        <!-- Pergamino central -->
+        <g transform="translate(62, 55)">
+          <!-- Sombra del pergamino -->
+          <rect x="3" y="5" width="94" height="112" rx="6" fill="#0A0A1E" opacity="0.5"/>
+          <!-- Cuerpo del pergamino -->
+          <rect x="0" y="0" width="94" height="112" rx="6" fill="url(#gperg)"/>
+          <!-- Enrollado superior -->
+          <ellipse cx="47" cy="4" rx="47" ry="9" fill="#E8D5B0"/>
+          <ellipse cx="47" cy="4" rx="40" ry="6" fill="#F7EDD8"/>
+          <!-- Enrollado inferior -->
+          <ellipse cx="47" cy="108" rx="47" ry="9" fill="#C4906A"/>
+          <ellipse cx="47" cy="108" rx="40" ry="6" fill="#D4A882"/>
+          <!-- Líneas de texto en el pergamino -->
+          <line x1="12" y1="28" x2="82" y2="28" stroke="#8B6914" stroke-width="1" stroke-opacity="0.4"/>
+          <line x1="12" y1="38" x2="82" y2="38" stroke="#8B6914" stroke-width="1" stroke-opacity="0.4"/>
+          <line x1="12" y1="48" x2="70" y2="48" stroke="#8B6914" stroke-width="1" stroke-opacity="0.4"/>
+          <line x1="12" y1="58" x2="82" y2="58" stroke="#8B6914" stroke-width="1" stroke-opacity="0.4"/>
+          <!-- Cruz/símbolo en el pergamino -->
+          <g transform="translate(33, 66)">
+            <line x1="14" y1="0" x2="14" y2="28" stroke="#1C1C3A" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="4" y1="8" x2="24" y2="8" stroke="#1C1C3A" stroke-width="2.5" stroke-linecap="round"/>
+            <!-- Destello dorado en la cruz -->
+            <circle cx="14" cy="8" r="3" fill="#C9A84C" opacity="0.8"/>
+          </g>
+          <!-- Código/símbolos debajo de la cruz -->
+          <text x="47" y="98" text-anchor="middle" font-family="'JetBrains Mono', monospace"
+            font-size="7" fill="#8B6914" opacity="0.7">· · · · · · · · ·</text>
+        </g>
+
+        <!-- Lupa encima del pergamino -->
+        <g transform="translate(118, 42)">
+          <!-- Mango -->
+          <line x1="36" y1="36" x2="52" y2="52" stroke="url(#goro)" stroke-width="5" stroke-linecap="round"/>
+          <!-- Círculo de la lupa -->
+          <circle cx="26" cy="26" r="24" fill="#1C1C3A" fill-opacity="0.7"
+            stroke="url(#goro)" stroke-width="3"/>
+          <!-- Reflejo en la lupa -->
+          <circle cx="20" cy="18" r="6" fill="white" fill-opacity="0.07"/>
+          <!-- Cruz de enfoque en la lupa -->
+          <line x1="26" y1="14" x2="26" y2="38" stroke="#C9A84C" stroke-width="1" stroke-opacity="0.5" stroke-dasharray="2 3"/>
+          <line x1="14" y1="26" x2="38" y2="26" stroke="#C9A84C" stroke-width="1" stroke-opacity="0.5" stroke-dasharray="2 3"/>
+          <!-- Punto de enfoque -->
+          <circle cx="26" cy="26" r="2.5" fill="#C9A84C"/>
+        </g>
+
+        <!-- Estrellas/destellos de descubrimiento -->
+        <g fill="#C9A84C">
+          <polygon points="30,35 32,30 34,35 29,32 35,32" opacity="0.6"/>
+          <polygon points="185,155 187,148 189,155 183,151 191,151" opacity="0.5"/>
+          <polygon points="42,170 43,166 44,170 40,168 46,168" opacity="0.4"/>
+          <polygon points="175,50 176.5,46 178,50 174,48 180,48" opacity="0.5"/>
+        </g>
+
+        <!-- Texto DESCIFRA en arco inferior -->
+        <path id="arcoInf" d="M 30,160 A 85,85 0 0,0 190,160" fill="none"/>
+        <text font-family="'JetBrains Mono', monospace" font-size="9" fill="#C9A84C"
+          letter-spacing="4" opacity="0.7">
+          <textPath href="#arcoInf" startOffset="15%">DESCIFRA · EL · CÓDIGO</textPath>
+        </text>
+
+        <!-- Texto ARQUEOLOGÍA en arco superior -->
+        <path id="arcoSup" d="M 25,100 A 85,85 0 0,1 195,100" fill="none"/>
+        <text font-family="'JetBrains Mono', monospace" font-size="8" fill="#8B6914"
+          letter-spacing="3" opacity="0.5">
+          <textPath href="#arcoSup" startOffset="8%">ARQUEOLOGÍA · BÍBLICA</textPath>
+        </text>
+      </svg>
+    </div>
+
+    <div class="nombre-primario">Arqueología Bíblica</div>
+    <div class="nombre-secundario">Descifra el <em>Código</em></div>
+    <div class="tagline">El gran misterio del lenguaje de Dios</div>
+  </div>
+
+  <div class="divisor anima-2"></div>
+
+  <!-- COMPARATIVA RÁPIDA -->
+  <div style="max-width:700px;width:100%;position:relative;z-index:2;" class="anima-3">
+    <div class="comparativa">
+      <div class="comp-card" style="background:linear-gradient(135deg,rgba(27,77,62,0.4),rgba(28,28,58,0.3));border:1px solid rgba(27,77,62,0.4);">
+        <div class="comp-titulo" style="color:#52B788;">🌿 Guardianes<br><span style="font-size:14px;font-weight:400;color:#74C69D;">Año 1</span></div>
+        <div class="comp-item"><span class="comp-dot" style="color:#52B788;">▸</span><span style="color:#b7e4c7;">Paleta: verde vivo, agua, tierra fértil</span></div>
+        <div class="comp-item"><span class="comp-dot" style="color:#52B788;">▸</span><span style="color:#b7e4c7;">Pregunta: ¿Cómo cuido el jardín?</span></div>
+        <div class="comp-item"><span class="comp-dot" style="color:#52B788;">▸</span><span style="color:#b7e4c7;">Metáfora: el niño jardinero</span></div>
+        <div class="comp-item"><span class="comp-dot" style="color:#52B788;">▸</span><span style="color:#b7e4c7;">Mundo: exterior, vivo, sensorial</span></div>
+      </div>
+      <div class="comp-card" style="background:linear-gradient(135deg,rgba(139,105,20,0.3),rgba(28,28,58,0.5));border:1px solid rgba(201,168,76,0.3);">
+        <div class="comp-titulo" style="color:var(--arena);">📜 Descifra<br><span style="font-size:14px;font-weight:400;color:var(--tierra-l);">Año 2</span></div>
+        <div class="comp-item"><span class="comp-dot" style="color:var(--arena);">▸</span><span style="color:var(--tierra-l);">Paleta: arena, polvo, tinta antigua</span></div>
+        <div class="comp-item"><span class="comp-dot" style="color:var(--arena);">▸</span><span style="color:var(--tierra-l);">Pregunta: ¿Cómo escucho el mensaje?</span></div>
+        <div class="comp-item"><span class="comp-dot" style="color:var(--arena);">▸</span><span style="color:var(--tierra-l);">Metáfora: el niño arqueólogo</span></div>
+        <div class="comp-item"><span class="comp-dot" style="color:var(--arena);">▸</span><span style="color:var(--tierra-l);">Mundo: interior, histórico, misterio</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!--  PALETA DE COLORES                                         -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div style="background:linear-gradient(180deg,#1C1C3A,#12120A);">
+<section class="seccion">
+  <div class="seccion-titulo">Sistema de color</div>
+  <div class="paleta-grid">
+    <div class="color-card">
+      <div class="color-muestra" style="background:#1C1C3A;"></div>
+      <div class="color-info">
+        <div class="color-nombre">Tinta Nocturna</div>
+        <div class="color-hex">#1C1C3A</div>
+        <div class="color-uso">Fondo principal, misterio</div>
+      </div>
+    </div>
+    <div class="color-card">
+      <div class="color-muestra" style="background:#C9A84C;"></div>
+      <div class="color-info">
+        <div class="color-nombre">Oro Antiguo</div>
+        <div class="color-hex">#C9A84C</div>
+        <div class="color-uso">Acento primario, descubrimiento</div>
+      </div>
+    </div>
+    <div class="color-card">
+      <div class="color-muestra" style="background:#F7EDD8;"></div>
+      <div class="color-info">
+        <div class="color-nombre">Pergamino</div>
+        <div class="color-hex">#F7EDD8</div>
+        <div class="color-uso">Textos principales, fondos de tarjeta</div>
+      </div>
+    </div>
+    <div class="color-card">
+      <div class="color-muestra" style="background:#7B4F2E;"></div>
+      <div class="color-info">
+        <div class="color-nombre">Tierra Siena</div>
+        <div class="color-hex">#7B4F2E</div>
+        <div class="color-uso">Secundario cálido, madera</div>
+      </div>
+    </div>
+    <div class="color-card">
+      <div class="color-muestra" style="background:#8B2010;"></div>
+      <div class="color-info">
+        <div class="color-nombre">Sello Rojo</div>
+        <div class="color-hex">#8B2010</div>
+        <div class="color-uso">Alertas, días críticos, Babel</div>
+      </div>
+    </div>
+    <div class="color-card">
+      <div class="color-muestra" style="background:linear-gradient(135deg,#C9A84C,#F7EDD8);"></div>
+      <div class="color-info">
+        <div class="color-nombre">Gradiente Hallazgo</div>
+        <div class="color-hex">Oro → Pergamino</div>
+        <div class="color-uso">Botones CTA, momentos de revelación</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIPOGRAFÍA -->
+  <div class="seccion-titulo">Sistema tipográfico</div>
+  <div class="tipo-showcase">
+    <div class="tipo-card">
+      <div class="tipo-label">Display / Títulos</div>
+      <div class="tipo-muestra-display">Descifra el <em>Código</em></div>
+      <div style="margin-top:12px;font-size:11px;color:var(--arena);font-family:'JetBrains Mono',monospace;opacity:0.6;">
+        Playfair Display 900 · Aa Bb Cc
+      </div>
+    </div>
+    <div class="tipo-card">
+      <div class="tipo-label">Cuerpo / Narrativa</div>
+      <div class="tipo-muestra-body">El lenguaje es el regalo más antiguo de Dios al ser humano. Con él nombramos, creamos, y escuchamos su voz.</div>
+      <div style="margin-top:12px;font-size:11px;color:var(--arena);font-family:'JetBrains Mono',monospace;opacity:0.6;">
+        Source Serif 4 · 300 weight
+      </div>
+    </div>
+    <div class="tipo-card">
+      <div class="tipo-label">Códigos / Datos / UI</div>
+      <div class="tipo-muestra-mono">DÍA · 01 · GÉNESIS<br>COORD: 31°42'N 35°12'E<br>VERSÍCULO: GEN.1:3<br>ESTADO: 🔒 BLOQUEADO</div>
+      <div style="margin-top:12px;font-size:11px;color:var(--arena);font-family:'JetBrains Mono',monospace;opacity:0.6;">
+        JetBrains Mono · 400/700
+      </div>
+    </div>
+    <div class="tipo-card">
+      <div class="tipo-label">Comparativa de mundos</div>
+      <div style="display:flex;gap:16px;align-items:center;margin-top:8px;">
+        <div style="text-align:center;">
+          <div style="font-family:'Trebuchet MS',sans-serif;font-size:22px;font-weight:800;color:#52B788;">Guardianes</div>
+          <div style="font-size:10px;color:#74C69D;margin-top:4px;font-family:'JetBrains Mono',monospace;">Trebuchet MS</div>
+        </div>
+        <div style="color:var(--arena);font-size:20px;">↔</div>
+        <div style="text-align:center;">
+          <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:900;color:var(--arena);">Descifra</div>
+          <div style="font-size:10px;color:var(--tierra-l);margin-top:4px;font-family:'JetBrains Mono',monospace;">Playfair Display</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!--  PERSONAJES                                                -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div style="background:linear-gradient(180deg,#12120A,#0A0A1E);">
+<section class="seccion">
+  <div class="seccion-titulo">Personajes del universo</div>
+  <div class="personajes-grid">
+    <div class="personaje-card" style="--grad: linear-gradient(90deg,#C9A84C,#F5E6C8);">
+      <span class="personaje-emoji">🧑‍🔬</span>
+      <div class="personaje-nombre">Marco</div>
+      <div class="personaje-rol">El Arqueólogo</div>
+      <div class="personaje-desc">Niño de 11 años que encuentra el primer fragmento de pergamino en el jardín de Sofía. Curioso, impaciente, valiente. Su error favorito es concluir antes de leer todo el texto.</div>
+      <span class="personaje-edad">Protagonista · Días 1–6</span>
+    </div>
+    <div class="personaje-card" style="--grad: linear-gradient(90deg,#F7EDD8,#C9A84C);">
+      <span class="personaje-emoji">👵</span>
+      <div class="personaje-nombre">Abuela Palabra</div>
+      <div class="personaje-rol">La Guardiana del Código</div>
+      <div class="personaje-desc">Anciana bibliotecaria que guarda los pergaminos del jardín. Conoce cada símbolo pero nunca da la respuesta directa — hace preguntas que llevan al descubrimiento.</div>
+      <span class="personaje-edad">Mentora · Todos los días</span>
+    </div>
+    <div class="personaje-card" style="--grad: linear-gradient(90deg,#7B4F2E,#C9A84C);">
+      <span class="personaje-emoji">✍️</span>
+      <div class="personaje-nombre">Lex</div>
+      <div class="personaje-rol">El Escriba</div>
+      <div class="personaje-desc">Personaje histórico que aparece en viñetas animadas dentro de la app. Vive en el siglo I y copia rollos en una cueva. Muestra el costo y la devoción de preservar la Palabra.</div>
+      <span class="personaje-edad">Histórico · Viñetas diarias</span>
+    </div>
+    <div class="personaje-card" style="--grad: linear-gradient(90deg,#1B4D3E,#C9A84C);">
+      <span class="personaje-emoji">🌻</span>
+      <div class="personaje-nombre">Sofía</div>
+      <div class="personaje-rol">El Puente</div>
+      <div class="personaje-desc">La sembradora del Año 1 regresa. Ella fue quien plantó la semilla de girasol en el jardín donde Marco encontró el pergamino. El universo de Guardianes vive aquí.</div>
+      <span class="personaje-edad">De Guardianes · Día 1 y 6</span>
+    </div>
+    <div class="personaje-card" style="--grad: linear-gradient(90deg,#8B2010,#C9A84C);">
+      <span class="personaje-emoji">🏛️</span>
+      <div class="personaje-nombre">El Pergamino Roto</div>
+      <div class="personaje-rol">El MacGuffin</div>
+      <div class="personaje-desc">Un pergamino en 6 fragmentos que Marco debe reconstruir durante los 6 días. Cada día revela una pieza. El texto completo es una cita sobre el Logos — la Palabra de Dios.</div>
+      <span class="personaje-edad">Artefacto · Arco de 6 días</span>
+    </div>
+    <div class="personaje-card" style="--grad: linear-gradient(90deg,#4A4A7A,#C9A84C);">
+      <span class="personaje-emoji">🔑</span>
+      <div class="personaje-nombre">El Código</div>
+      <div class="personaje-rol">El Misterio</div>
+      <div class="personaje-desc">Un sistema de símbolos que aparece en cada actividad del cuaderno de campo. Los niños van aprendiendo el código a lo largo de la semana hasta poder leer el mensaje final del Día 6.</div>
+      <span class="personaje-edad">Sistema · Cuaderno de campo</span>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!--  LOS 6 DÍAS                                                -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div style="background:linear-gradient(180deg,#0A0A1E,#1C1C3A);">
+<section class="seccion">
+  <div class="seccion-titulo">Los 6 días del campamento</div>
+  <div class="dias-grid">
+    <div class="dia-card" style="background:linear-gradient(135deg,rgba(27,77,62,0.3),rgba(28,28,58,0.8));">
+      <div class="dia-num">1</div>
+      <div class="dia-badge" style="background:rgba(82,183,136,0.15);color:#52B788;">Creación</div>
+      <div class="dia-titulo">El Regalo de las Palabras</div>
+      <div class="dia-concepto">Solo el humano tiene lenguaje simbólico — el aspecto lingual de Dooyeweerd</div>
+      <div class="dia-versiculo">Génesis 1:3 — "Y dijo Dios..."</div>
+    </div>
+    <div class="dia-card" style="background:linear-gradient(135deg,rgba(139,32,16,0.3),rgba(28,28,58,0.8));">
+      <div class="dia-num">2</div>
+      <div class="dia-badge" style="background:rgba(139,32,16,0.2);color:#E57373;">Caída</div>
+      <div class="dia-titulo">Cuando las Palabras se Rompieron</div>
+      <div class="dia-concepto">Babel: el pecado fragmentó la comunicación humana y la comunidad</div>
+      <div class="dia-versiculo">Génesis 11:7–8</div>
+    </div>
+    <div class="dia-card" style="background:linear-gradient(135deg,rgba(201,168,76,0.2),rgba(28,28,58,0.8));">
+      <div class="dia-num">3</div>
+      <div class="dia-badge" style="background:rgba(201,168,76,0.15);color:var(--arena);">Redención</div>
+      <div class="dia-titulo">Los Guardianes del Texto</div>
+      <div class="dia-concepto">Los escribas que protegieron la Biblia por siglos — fidelidad como vocación</div>
+      <div class="dia-versiculo">Salmos 119:105</div>
+    </div>
+    <div class="dia-card" style="background:linear-gradient(135deg,rgba(74,74,122,0.3),rgba(28,28,58,0.8));">
+      <div class="dia-num">4</div>
+      <div class="dia-badge" style="background:rgba(74,74,122,0.3);color:#9B9BDF;">Evidencia</div>
+      <div class="dia-titulo">El Código del Pergamino</div>
+      <div class="dia-concepto">Los Rollos del Mar Muerto — Dios no teme la investigación</div>
+      <div class="dia-versiculo">2 Timoteo 3:16–17</div>
+    </div>
+    <div class="dia-card" style="background:linear-gradient(135deg,rgba(201,168,76,0.25),rgba(28,28,58,0.8));">
+      <div class="dia-num">5</div>
+      <div class="dia-badge" style="background:rgba(201,168,76,0.2);color:var(--arena);">Misión</div>
+      <div class="dia-titulo">Una Sola Voz, Muchos Idiomas</div>
+      <div class="dia-concepto">Pentecostés invirtió Babel — el Espíritu restaura la comunicación rota</div>
+      <div class="dia-versiculo">Hechos 2:4–6</div>
+    </div>
+    <div class="dia-card" style="background:linear-gradient(135deg,rgba(139,105,20,0.3),rgba(28,28,58,0.8));">
+      <div class="dia-num">6</div>
+      <div class="dia-badge" style="background:rgba(139,105,20,0.2);color:#D4AC52;">Comisión</div>
+      <div class="dia-titulo">Lleva el Mensaje</div>
+      <div class="dia-concepto">El niño como portador del evangelio — evangelismo oral y escrito</div>
+      <div class="dia-versiculo">Romanos 10:14–15</div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!--  MOCKUP APP                                                -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div style="background:linear-gradient(180deg,#1C1C3A,#0A0A1E);padding:60px 20px;">
+<section class="seccion">
+  <div class="seccion-titulo">Pantalla de la app — vista previa</div>
+  <div class="app-mockup">
+    <div class="phone-frame">
+      <div class="phone-screen">
+        <div class="screen-header">
+          <div class="screen-logo-mini">📜🔍</div>
+          <div class="screen-titulo">Arqueología Bíblica</div>
+          <div class="screen-subtitulo">Descifra el <em>Código</em></div>
+        </div>
+        <div class="screen-body">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;
+            color:var(--arena);letter-spacing:2px;opacity:0.6;margin-bottom:14px;">
+            CAMPAMENTO · 6 DÍAS
+          </div>
+
+          <div class="screen-dia-btn">
+            <span class="screen-dia-emoji">🌿</span>
+            <div class="screen-dia-info">
+              <div class="screen-dia-num">Día 01 · Creación</div>
+              <div class="screen-dia-nombre">El Regalo de las Palabras</div>
+            </div>
+            <span style="color:var(--arena);font-size:14px;">✓</span>
+          </div>
+
+          <div class="screen-dia-btn">
+            <span class="screen-dia-emoji">🏛️</span>
+            <div class="screen-dia-info">
+              <div class="screen-dia-num">Día 02 · Caída</div>
+              <div class="screen-dia-nombre">Cuando las Palabras se Rompieron</div>
+            </div>
+            <span style="color:var(--arena);font-size:14px;">✓</span>
+          </div>
+
+          <div class="screen-dia-btn" style="border-color:rgba(201,168,76,0.5);background:linear-gradient(135deg,rgba(201,168,76,0.2),rgba(28,28,58,0.9));">
+            <span class="screen-dia-emoji">✍️</span>
+            <div class="screen-dia-info">
+              <div class="screen-dia-num" style="color:var(--arena);">Día 03 · HOY</div>
+              <div class="screen-dia-nombre" style="color:var(--blanco);">Los Guardianes del Texto</div>
+            </div>
+            <span style="font-size:16px;">▶️</span>
+          </div>
+
+          <div class="screen-dia-btn" style="opacity:0.4;">
+            <span class="screen-dia-emoji">🔍</span>
+            <div class="screen-dia-info">
+              <div class="screen-dia-num">Día 04</div>
+              <div class="screen-dia-nombre">El Código del Pergamino</div>
+            </div>
+            <span class="screen-dia-lock">🔒</span>
+          </div>
+
+          <div class="screen-dia-btn" style="opacity:0.3;">
+            <span class="screen-dia-emoji">🌍</span>
+            <div class="screen-dia-info">
+              <div class="screen-dia-num">Día 05</div>
+              <div class="screen-dia-nombre">Una Sola Voz, Muchos Idiomas</div>
+            </div>
+            <span class="screen-dia-lock">🔒</span>
+          </div>
+
+          <div class="screen-dia-btn" style="opacity:0.2;">
+            <span class="screen-dia-emoji">📣</span>
+            <div class="screen-dia-info">
+              <div class="screen-dia-num">Día 06</div>
+              <div class="screen-dia-nombre">Lleva el Mensaje</div>
+            </div>
+            <span class="screen-dia-lock">🔒</span>
+          </div>
+
+          <!-- Barra de progreso del pergamino -->
+          <div style="margin-top:20px;padding:12px 14px;
+            background:rgba(201,168,76,0.08);border-radius:12px;
+            border:1px solid rgba(201,168,76,0.15);">
+            <div style="display:flex;justify-content:space-between;
+              margin-bottom:8px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--arena);">
+              <span>PERGAMINO RECONSTRUIDO</span>
+              <span>2 / 6</span>
+            </div>
+            <div style="height:6px;background:rgba(255,255,255,0.08);border-radius:3px;overflow:hidden;">
+              <div style="width:33%;height:100%;
+                background:linear-gradient(90deg,var(--arena-d),var(--arena));
+                border-radius:3px;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- FOOTER -->
+<div class="footer-brand">
+  <div style="font-size:40px;margin-bottom:12px;">📜</div>
+  <div class="footer-logo">Arqueología Bíblica · Descifra el Código</div>
+  <div class="footer-sub">Año 2 del Ecosistema Guardianes · 2026</div>
+  <div style="margin-top:24px;font-size:12px;color:var(--tierra-l);opacity:0.4;font-style:italic;font-family:'Source Serif 4',serif;">
+    "En el principio era el Verbo." — Juan 1:1
+  </div>
+</div>
+
+<script>
+// Generar partículas de polvo
+const polvo = document.getElementById('polvo');
+for(let i=0;i<40;i++){
+  const p=document.createElement('span');
+  p.style.left=Math.random()*100+'%';
+  p.style.setProperty('--dur',(6+Math.random()*10)+'s');
+  p.style.setProperty('--delay',(Math.random()*8)+'s');
+  p.style.setProperty('--dx',(Math.random()*60-30)+'px');
+  p.style.width=p.style.height=(1+Math.random()*2)+'px';
+  p.style.opacity='0';
+  polvo.appendChild(p);
+}
+</script>
+</body>
+</html>
